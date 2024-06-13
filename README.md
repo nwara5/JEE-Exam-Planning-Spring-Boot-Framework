@@ -35,22 +35,22 @@ mvn spring-boot:run
 
 ### 5. Les fonctionnalités :
 - L'ajout d'un examen.
-![Ajout d'un examen](images\formulaire_Creation_Examen.png)
+![Ajout d'un examen](images/formulaire_Creation_Examen.png)
 
 - La suppression d'un examen.
 
 - La modification.
-![Modification d'un examen](images\formulaire_Modification_Examen.png)
+![Modification d'un examen](images/formulaire_Modification_Examen.png)
 
 - L'affectation des salles.
 - L'affectation des surveillants et des controlleurs d'absence.
-![Affectation des salles](images\Affectation_Salles.png)
+![Affectation des salles](images/Affectation_Salles.png)
 
 - Consiltation des information d'un examen.
-![Consultation](images\infomation.png)
+![Consultation](images/infomation.png)
 
 - L'inclusion le procès-verbal, le rapport et le relevé d'examen.
-![Papier](images\PV_Papport_enonce.png)
+![Papier](images/PV_Papport_enonce.png)
 
 
 ### 6. Contribuer :
