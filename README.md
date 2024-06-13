@@ -13,7 +13,7 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants :
 - PostgreSQL (ou tout autre SGBD supporté par Spring Data JPA, A condition de changer les propretes de chaque SGBD dans le fichier application.properties)
 
 ## Architecture
-![Architecture](images d'application/Architecture.drawio.png)
+![Architecture](images/Architecture.drawio.png)
 
 
 ## Installation
@@ -35,19 +35,19 @@ mvn spring-boot:run
 
 ### 5. Les fonctionnalités :
 - L'ajout d'un examen.
-![Ajout d'un examen](images d'application\formulaire de creation d'examen.png)
+![Ajout d'un examen](images\formulaire de creation d'examen.png)
 
 - La suppression d'un examen.
 
 - La modification.
-![Modification d'un examen](images d'application\formulaire de modification d'examen.png)
+![Modification d'un examen](images\formulaire de modification d'examen.png)
 
 - L'affectation des salles.
 - L'affectation des surveillants et des controlleurs d'absence.
-![Affectation des salles](images d'application\Affectation des salles.png)
+![Affectation des salles](images\Affectation des salles.png)
 
 - L'inclusion le procès-verbal, le rapport et le relevé d'examen.
-![Papier](images d'application\PV-Papport et enonce.png)
+![Papier](images\PV-Papport et enonce.png)
 
 
 ### 6. Contribuer :
