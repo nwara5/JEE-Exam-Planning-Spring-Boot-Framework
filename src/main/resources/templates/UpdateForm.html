@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des examens</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar-nav .nav-link, .navbar-brand, .dropdown-item, .btn-outline-success {
+            font-size: 16px; /* Set the desired font size */
+        }
+        .table thead th {
+            font-weight: normal; /* Make column headers not bold */
+        }
+        .table-container {
+            display: flex;
+            justify-content: center; /* Center the table horizontally */
+        }
+        .table {
+            margin-top: 50px; /* Add margin to the top */
+            margin-bottom: 20px; /* Add some margin to the bottom */
+        }
+        h1 {
+            margin-top: 20px;
+            text-align: center; /* Center align the heading */
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            Page d'accueil
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gestion des Examens
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/api/examens/addExamen">Ajouter un examen</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/api/examens/allExams">Lister tous les examens</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/general/about">
+                        A propos
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h2 class="mt-4 text-center">Formulaire de modification des examens</h2>
+    <form th:action="@{/api/examens/handleUpdateForm}" th:object="${examen}" method="post" class="mt-4">
+        <div class="form-row">
+
+            <div class="form-group col-md-6">
+                <label for="idExam">Id</label>
+                <input id="idExam" class="form-control" th:field="*{idExam}" readonly />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="semestre">Semestre</label>
+                <input id="semestre" class="form-control" th:field="*{semestre}" readonly />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="ExamSession">Session</label>
+                <input id="ExamSession" class="form-control" th:field="*{ESession}" readonly />
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="typeExamen">Type d'Examen</label>
+                <input id="typeExamen" class="form-control" th:field="*{typeExamen}" readonly />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="dureePrevue">Durée Prévue(H)</label>
+                <input type="number" id="dureePrevue" class="form-control" th:field="*{dureePrevue}" step="0.5" readonly/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="heureDebut">Heure de Début</label>
+                <input type="time" id="heureDebut" class="form-control" th:field="*{heureDebut}" readonly/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" class="form-control" th:field="*{date}" readonly />
+
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="dureeReelle">Durée Réelle(H)</label>
+                <input type="number" id="dureeReelle" class="form-control" th:field="*{dureeReelle}" step="0.5"/>
+            </div>
+            <div class="form-group col-md-6 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary" style="width: 100%; height: calc(1.5em + .75rem + 2px);">Submit</button>
+            </div>
+        </div>
+
+
+
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

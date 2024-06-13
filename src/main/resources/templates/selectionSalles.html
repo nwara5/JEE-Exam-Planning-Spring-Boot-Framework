@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des examens</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar-nav .nav-link, .navbar-brand, .dropdown-item {
+            font-size: 16px;
+        }
+        .table thead th {
+            font-weight: normal;
+        }
+        .table-container {
+            display: flex;
+            justify-content: center;
+        }
+        .table {
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .large-text {
+            font-size: 20px;
+            font-weight: bolder;
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            Page d'accueil
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gestion des Examens
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/api/examens/addExamen">Ajouter un examen</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/api/examens/allExams">Lister tous les examens</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/general/about">
+                        A propos
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div th:if="${affectationsalle == null}" class="container mt-4">
+    <div class="d-flex justify-content-center">
+        <div class="form-group">
+            <label class="large-text">Veuillez choisir la manière dont vous voulez choisir vos surveillants :</label>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <form th:action="@{/api/examens/SalleSurveillantRand/{examenId}(examenId=${examenId})}" method="post" style="display:inline; margin-right: 10px;">
+            <input type="hidden" name="salleInput" th:value="${selectedSalle}" />
+            <button type="submit" class="btn btn-secondary">Choisir les surveillants aléatoirement</button>
+        </form>
+
+
+    </div>
+    <div th:if="${choixRand != null || choixFil != null}" class="d-flex justify-content-center mt-4">
+        <div class="form-group">
+            <label style="color: red;">A ne pas choisir la même salle deux fois !</label>
+        </div>
+    </div>
+</div>
+
+
+<div th:if="${choixRand != null}" class="container mt-4">
+    <form th:action="@{/api/examens/submitFormRand/{examenId}(examenId=${examenId})}" th:object="${examen}" method="post">
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-3">
+                <label for="salle1">Salle 1 :</label>
+                <select id="salle1" class="form-control" onchange="updateSelectedSalle('salle1', 'salleInput1')">
+                    <option th:each="salle : ${Salles}" th:value="${salle.getIdSalle()}" th:text="${salle.getNomSalle()}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="salleInput1">Salle 1 Sélectionnée :</label>
+                <input type="text" id="salleInput1" name="salleInput1" class="form-control" th:value="${selectedSalle1}" placeholder="Salle selectionee" readonly>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="nbr1">Nombre de surveillants:</label>
+                <input type="number" id="nbr1" name="nbrSurv1" class="form-control" th:value="${nbrSurv1}" placeholder="Nombre de surveillants" min="0" step="1">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="nbrc1">Nombre de controlleurs d'abscence:</label>
+                <input type="number" id="nbrc1" name="nbrc1" class="form-control" th:value="${1}" placeholder="Nombre de surveillants" min="0" step="1" readonly>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-3">
+                <label for="salle2">Salle 2 :</label>
+                <select id="salle2" class="form-control" onchange="updateSelectedSalle('salle2', 'salleInput2')">
+                    <option th:each="salle : ${Salles}" th:value="${salle.getIdSalle()}" th:text="${salle.getNomSalle()}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="salleInput2">Salle 2 Sélectionnée :</label>
+                <input type="text" id="salleInput2" name="salleInput2" class="form-control" th:value="${selectedSalle2}" placeholder="Salle selectionee" readonly>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="nbr2">Nombre de surveillants:</label>
+                <input type="number" id="nbr2" name="nbrSurv2" class="form-control" th:value="${nbrSurv2}" placeholder="Nombre de surveillants" min="0" step="1">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="nbrc2">Nombre de controlleurs d'abscence:</label>
+                <input type="number" id="nbrc2" name="nbrc2" class="form-control" th:value="${1}" placeholder="Nombre de surveillants" min="0" step="1" readonly>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-3">
+                <label for="salle3">Salle 3 :</label>
+                <select id="salle3" class="form-control" onchange="updateSelectedSalle('salle3', 'salleInput3')">
+                    <option th:each="salle : ${Salles}" th:value="${salle.getIdSalle()}" th:text="${salle.getNomSalle()}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="salleInput3">Salle 3 Sélectionnée :</label>
+                <input type="text" id="salleInput3" name="salleInput3" class="form-control" th:value="${selectedSalle3}" placeholder="Salle selectionee" readonly>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="nbr3">Nombre de surveillants:</label>
+                <input type="number" id="nbr3" name="nbrSurv3" class="form-control" th:value="${nbrSurv3}" placeholder="Nombre de surveillants" min="0" step="1">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="nbrc3">Nombre de controlleurs d'abscence:</label>
+                <input type="number" id="nbrc3" name="nbrc3" class="form-control" th:value="${1}" placeholder="Nombre de surveillants" min="0" step="1" readonly>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12 d-flex justify-content-center">
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-primary mt-3" style="width: 100%; height: calc(1.5em + .75rem + 2px);">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div th:if="${choixFil != null}" class="container mt-4">
+
+    <form th:action="@{/api/examens/submitFormFil/{examenId}(examenId=${examenId})}" th:object="${examen}" method="post">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="grp">Nom groupe :</label>
+                <select id="grp" class="form-control" onchange="updateSelectedSalle('grp', 'grpname')">
+                    <option th:each="groupe : ${Groupes}" th:value="${groupe.getId()}" th:text="${groupe.getNomGrp()}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="grpname">Groupe Sélectionnée: </label>
+                <input type="text" id="grpname" name="grpname" class="form-control" th:value="${grpname}" placeholder="Groupe Sélectionnée" readonly>
+            </div>
+        </div>
+
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-3">
+                <label for="salle4">Salle 1 :</label>
+                <select id="salle4" class="form-control" onchange="updateSelectedSalle('salle4', 'salleInput4')">
+                    <option th:each="salle : ${Salles}" th:value="${salle.getIdSalle()}" th:text="${salle.getNomSalle()}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="salleInput4">Salle 1 Sélectionnée :</label>
+                <input type="text" id="salleInput4" name="salleInput4" class="form-control" th:value="${selectedSalle4}" placeholder="Salle selectionee" readonly>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="nbr4">Nombre de surveillants:</label>
+                <input type="number" id="nbr4" name="nbrSurv4" class="form-control" th:value="${nbrSurv4}" placeholder="Nombre de surveillants" min="0" step="1">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="nbrc4">Nombre de controlleurs d'abscence:</label>
+                <input type="number" id="nbrc4" name="nbrc4" class="form-control" th:value="${1}" placeholder="Nombre de surveillants" min="0" step="1" readonly>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-3">
+                <label for="salle5">Salle 2 :</label>
+                <select id="salle5" class="form-control" onchange="updateSelectedSalle('salle5', 'salleInput5')">
+                    <option th:each="salle : ${Salles}" th:value="${salle.getIdSalle()}" th:text="${salle.getNomSalle()}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="salleInput5">Salle 2 Sélectionnée :</label>
+                <input type="text" id="salleInput5" name="salleInput5" class="form-control" th:value="${selectedSalle5}" placeholder="Salle selectionee" readonly>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="nbr5">Nombre de surveillants:</label>
+                <input type="number" id="nbr5" name="nbrSurv5" class="form-control" th:value="${nbrSurv5}" placeholder="Nombre de surveillants" min="0" step="1">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="nbrc5">Nombre de controlleurs d'abscence:</label>
+                <input type="number" id="nbrc5" name="nbrc5" class="form-control" th:value="${1}" placeholder="Nombre de surveillants" min="0" step="1" readonly>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-3">
+                <label for="salle6">Salle 3 :</label>
+                <select id="salle6" class="form-control" onchange="updateSelectedSalle('salle6', 'salleInput6')">
+                    <option th:each="salle : ${Salles}" th:value="${salle.getIdSalle()}" th:text="${salle.getNomSalle()}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="salleInput6">Salle 3 Sélectionnée :</label>
+                <input type="text" id="salleInput6" name="salleInput6" class="form-control" th:value="${selectedSalle6}" placeholder="Salle selectionee" readonly>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="nbr6">Nombre de surveillants:</label>
+                <input type="number" id="nbr6" name="nbrSurv6" class="form-control" th:value="${nbrSurv6}" placeholder="Nombre de surveillants" min="0" step="1">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="nbrc6">Nombre de controlleurs d'abscence:</label>
+                <input type="number" id="nbrc6" name="nbrc6" class="form-control" th:value="${1}" placeholder="Nombre de surveillants" min="0" step="1" readonly>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12 d-flex justify-content-center">
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-primary mt-3" style="width: 100%; height: calc(1.5em + .75rem + 2px);">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:if="${affectationsalle != null}" class="container mt-5">
+    <div class="alert alert-success" role="alert" th:text="${affectationsalle}"></div>
+</div>
+
+
+<div th:if="${affectationsalle != null && examen!= null}" class="container mt-4">
+    <form th:object="${examen}" method="post">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="idExamen">ID Examen</label>
+                <input type="text" id="idExamen" class="form-control" th:field="*{idExam}" readonly/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Esession">Session</label>
+                <input type="text" id="Esession" class="form-control" th:field="*{ESession}" readonly/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="semestre">Semestre</label>
+                <input type="text" id="semestre" class="form-control" th:field="*{semestre}" readonly/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="date">Date</label>
+                <input type="text" id="date" class="form-control" th:field="*{date}" readonly/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="heureDebut">Heure de debut</label>
+                <input type="text" id="heureDebut" class="form-control" th:field="*{heureDebut}" readonly/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="dureePrevue">Durée Prévue</label>
+                <input type="text" id="dureePrevue" class="form-control" th:field="*{dureePrevue}" readonly/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="dureeReelle">Durée Réelle</label>
+                <input type="text" id="dureeReelle" class="form-control" th:field="*{dureeReelle}" readonly/>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="table table-striped" >
+                <thead>
+                <tr>
+                    <th>Salles</th>
+                    <th>Surveillants</th>
+                    <th>Controlleurs d'abscence</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="salle : ${examen.salles}" th:data-examen-id="${examen.idExam}">
+                    <td th:text="${salle.nomSalle}"></td>
+                    <td>
+                        <span th:each="surveillant, iterStat : ${salle.surveillants}">
+                            <span th:text="${surveillant.nom} + ' ' + ${surveillant.prenom}"></span>
+                            <span th:if="${!iterStat.last}">, </span>
+                        </span>
+                    </td>
+                    <td th:if="${salle.admins != null}">
+                        <span th:each="admin, iterStat : ${salle.admins}">
+                            <span th:text="${admin.nom} + ' ' + ${admin.prenom}"></span>
+                            <span th:if="${!iterStat.last}">, </span>
+                        </span>
+                    </td>
+                    <td th:if="${salle.admins == null}">
+                        <span>Aucun admin assigné</span>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<script>
+    function updateSelectedSalle(selectId, inputId) {
+        var selectElement = document.getElementById(selectId);
+        var inputElement = document.getElementById(inputId);
+        var selectedText = selectElement.options[selectElement.selectedIndex].text;
+        inputElement.value = selectedText;
+    }
+
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

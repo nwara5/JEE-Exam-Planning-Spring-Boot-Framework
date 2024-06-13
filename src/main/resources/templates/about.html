@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Examens</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar-nav .nav-link, .navbar-brand, .dropdown-item, .btn-outline-success {
+            font-size: 16px;
+        }
+        .box {
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #d4edda;
+            margin-top: 50px;
+            justify-content: center; /* Centers the child elements horizontally */
+            align-items: center; /* Centers the child elements vertically */
+            text-align: center;
+            font-weight: bold; /* Makes the text bold */
+
+        }
+        .footer-text {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center; /* Centers the child elements horizontally */
+            align-items: center; /* Centers the child elements vertically */
+            text-align: center; /* Ensures text within the child elements is centered */
+        }
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            Page d'accueil
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gestion des Examens
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/api/examens/addExamen">Ajouter un examen</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/api/examens/allExams">Lister tous les examens</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/general/about">
+                        A propos
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <div class="box">
+        <p>ETUDIANTE :</p>
+        <p>Nom: EL BOUMASHOULI</p>
+        <p>Prenom: Naouar</p>
+        <p><3</p>
+    </div>
+    <div class="footer-text">
+        Encadré par : Mr Boudaa Tarik 03-06-2024
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+
+
+</html>

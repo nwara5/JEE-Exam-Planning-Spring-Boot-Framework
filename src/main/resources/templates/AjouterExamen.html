@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Exam Form</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Optionally, include your own CSS for custom styling -->
+    <style>
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+    <div class="container">
+        <a class="navbar-brand" href="/">Page d'accueil</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gestion des Examens
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/api/examens/addExamen">Ajouter un examen</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/api/examens/allExams">Lister tous les examens</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/general/about">A propos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container d-flex flex-column min-vh-100 justify-content-center">
+    <h2 class="mt-4 text-center">Formulaire de création des examens</h2>
+    <form th:action="@{/api/examens/examForm}" th:object="${examen}" method="post" class="mt-4">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="semestre">Semestre</label>
+                <select id="semestre" class="form-control" th:field="*{semestre}">
+                    <option th:each="semestre : ${semestres}" th:value="${semestre.getIdSemestre()}" th:text="${semestre.getNomSemestre()}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="ExamSession">Session</label>
+                <select id="ExamSession" class="form-control" th:field="*{ESession}">
+                    <option th:each="sessione : ${sessions}" th:value="${sessione.getIdsession()}" th:text="${sessione.getNomSession()}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="ep">Enseignant</label>
+                <select id="ep" class="form-control" th:field="*{enseignant}">
+                    <option th:each="ens : ${enseignants}" th:value="${ens.getIdPers()}" th:text="${ens.getNom()}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="typeExamen">Type d'Examen</label>
+                <select id="typeExamen" class="form-control" th:field="*{typeExamen}">
+                    <option value="DS">DS</option>
+                    <option value="Examen TP">Examen TP</option>
+                    <option value="Examen Finale">Examen Finale</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="dureePrevue">Durée Prévue(H)</label>
+                <input type="number" id="dureePrevue" class="form-control" th:field="*{dureePrevue}" step="0.5" />
+                <div class="error-message" th:if="${error != null}">
+                    <span th:text="${error}"></span>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="heureDebut">Heure de Début</label>
+                <input type="time" id="heureDebut" class="form-control" th:field="*{heureDebut}" />
+                <div class="error-message" th:if="${error != null}">
+                    <span th:text="${error}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-row align-items-end">
+            <div class="form-group col-md-6">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" class="form-control" th:field="*{date}">
+                <div class="error-message" th:if="${error != null}">
+                    <span th:text="${error}"></span>
+                </div>
+            </div>
+            <div class="form-group col-md-6 d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary mt-3" style="width: 100%; height: calc(1.5em + .75rem + 2px);">Submit</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+<script>
+    function limitSelection(select) {
+        const maxSelections = 3;
+        const selectedOptions = [...select.selectedOptions];
+        if (selectedOptions.length > maxSelections) {
+            selectedOptions.slice(maxSelections).forEach(option => option.selected = false);
+            alert('You can select up to 3 salles only.');
+        }
+        updateSelectedSalles(select);
+    }
+
+    function updateSelectedSalles(select) {
+        const selectedSallesInput = document.getElementById('selectedSalles');
+        const selectedOptions = [...select.selectedOptions];
+        const selectedSallesNames = selectedOptions.map(option => option.text).join(', ');
+        selectedSallesInput.value = selectedSallesNames;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const select = document.getElementById('salle');
+        updateSelectedSalles(select);
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

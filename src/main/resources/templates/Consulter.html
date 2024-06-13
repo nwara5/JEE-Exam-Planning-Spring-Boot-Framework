@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des examens</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar-nav .nav-link, .navbar-brand, .dropdown-item, .btn-outline-success {
+            font-size: 16px;
+        }
+        .table thead th {
+            font-weight: normal;
+        }
+        .table-container {
+            display: flex;
+            justify-content: center;
+        }
+        .table {
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            Page d'accueil
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gestion des Examens
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/api/examens/addExamen">Ajouter un examen</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/api/examens/allExams">Lister tous les examens</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/general/about">
+                        A propos
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div th:if="${examen!= null}" class="container mt-4">
+    <form th:object="${examen}" method="post">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="idExamen">ID Examen</label>
+                <input type="text" id="idExamen" class="form-control" th:field="*{idExam}" readonly/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Esession">Session</label>
+                <input type="text" id="Esession" class="form-control" th:field="*{ESession}" readonly/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="semestre">Semestre</label>
+                <input type="text" id="semestre" class="form-control" th:field="*{semestre}" readonly/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="date">Date</label>
+                <input type="text" id="date" class="form-control" th:field="*{date}" readonly/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="heureDebut">Heure de debut</label>
+                <input type="text" id="heureDebut" class="form-control" th:field="*{heureDebut}" readonly/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="dureePrevue">Durée Prévue</label>
+                <input type="text" id="dureePrevue" class="form-control" th:field="*{dureePrevue}" readonly/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="dureeReelle">Durée Réelle</label>
+                <input type="text" id="dureeReelle" class="form-control" th:field="*{dureeReelle}" readonly/>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="table table-striped" >
+                <thead>
+                <tr>
+                    <th>Salles</th>
+                    <th>Nombre de surveillants</th>
+                    <th>Surveillants</th>
+                    <th>Controlleurs d'abscence</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="salle : ${examen.salles}" th:data-examen-id="${examen.idExam}">
+                    <td th:text="${salle.nomSalle}"></td>
+                    <td th:text="${salle.surveillants.size()}"></td>
+                    <td>
+                        <span th:each="surveillant, iterStat : ${salle.surveillants}">
+                        <span th:text="${surveillant.nom} + ' ' + ${surveillant.prenom}"></span>
+                        <span th:if="${!iterStat.last}">, </span>
+                        </span>
+                    </td>
+                    <td th:if="${salle.admins != null}">
+                        <span th:each="admin, iterStat : ${salle.admins}">
+                            <span th:text="${admin.nom} + ' ' + ${admin.prenom}"></span>
+                            <span th:if="${!iterStat.last}">, </span>
+                        </span>
+                    </td>
+                    <td th:if="${salle.admins == null}">
+                        <span>Aucun admin assigné</span>
+                    </td>
+
+
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

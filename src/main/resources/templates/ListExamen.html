@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des examens</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar-nav .nav-link, .navbar-brand, .dropdown-item {
+            font-size: 16px;
+        }
+         .table thead th {
+             font-weight: normal;
+         }
+        .table-container {
+            display: flex;
+            justify-content: center;
+            width : 100%/* Center the table horizontally */
+        }
+        .table {
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .grey-background {
+            background-color: grey;
+        }
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            Page d'accueil
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gestion des Examens
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/api/examens/addExamen">Ajouter un examen</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/api/examens/allExams">Lister tous les examens</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/general/about">
+                        A propos
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container" >
+    <h1>Liste des Examens</h1>
+    <div class="table-container">
+        <table class="table table-striped" >
+            <thead>
+            <tr>
+                <th>ID Examen</th>
+                <th>Session</th>
+                <th>Semestre</th>
+                <th>Date</th>
+                <th>Heure de debut</th>
+                <th>Durée Prévue</th>
+                <th>Durée Réelle</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="examen : ${ListExam}" th:data-examen-id="${examen.idExam}">
+                <td th:text="${examen.idExam}"></td>
+                <td th:text="${examen.ESession.getNomSession()}"></td>
+                <td th:text="${examen.semestre.getNomSemestre()}"></td>
+                <td th:text="${examen.date}"></td>
+                <td th:text="${examen.heureDebut}"></td>
+                <td th:text="${examen.dureePrevue}"></td>
+                <td th:text="${examen.dureeReelle}"></td>
+
+                <!-- Button and Form -->
+                <td>
+                    <a class="btn btn-primary update-button"
+                       th:href="@{/api/examens/updateform/{examenId}(examenId=${examen.idExam})}">
+                        Mod.
+                    </a>
+
+                    <form th:action="@{/api/examens/deleteExamen}" method="post" style="display:inline;">
+                        <input type="hidden" name="idExam" th:value="${examen.idExam}" />
+                        <button type="submit" class="btn btn-danger">Supp.</button>
+                    </form>
+
+                    <form th:action="@{/api/examens/SalleSurveillant/{examenId}(examenId=${examen.idExam})}" method="post" style="display:inline;">
+                        <input type="hidden" name="idExam" th:value="${examen.idExam}" />
+                        <button type="submit" class="btn btn-success">Salles</button>
+                    </form>
+
+                    <form th:action="@{/api/examens/Consulter/{examenId}(examenId=${examen.idExam})}" method="post" style="display:inline;">
+                        <input type="hidden" name="idExam" th:value="${examen.idExam}" />
+                        <button type="submit" class="btn btn-success" style="background-color: pink; border-color: pink;">Voir</button>
+                    </form>
+                    <!-- HTML -->
+                    <form th:action="@{/api/examens/papiers/{examenId}(examenId=${examen.idExam})}" method="post" style="display:inline;">
+                        <input type="hidden" name="idExam" th:value="${examen.idExam}" />
+                        <button type="submit" class="btn btn-success grey-background">Pap.</button>
+                    </form>
+
+                </td>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var updateButtons = document.querySelectorAll('.update-button');
+        updateButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var idExam = button.getAttribute('data-examen-id');
+                var dureeReelle = button.getAttribute('data-examen-dureeReelle');
+
+                document.getElementById('modal-idExam').value = idExam;
+                document.getElementById('modal-dureeReelle').value = dureeReelle;
+            });
+        });
+    });
+</script>
+</body>
+</html>
+
