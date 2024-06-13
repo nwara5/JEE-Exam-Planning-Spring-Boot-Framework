@@ -13,7 +13,7 @@ Avant de commencer, assurez-vous d'avoir installé les éléments suivants :
 - PostgreSQL (ou tout autre SGBD supporté par Spring Data JPA, A condition de changer les propretes de chaque SGBD dans le fichier application.properties)
 
 ## Architecture
-![Architecture](images d'application\Architecture.drawio.png)
+![Architecture](images d'application/Architecture.drawio.png)
 
 
 ## Installation
