@@ -1,0 +1,5 @@
+INSERT INTO groupe_des_enseignants (id_groupe_enseignant, nbr_membre, nom_grp) VALUES 
+(1, 10, 'Département Mathématiques et Informatique'),
+(2, 15, 'Département Chimie et Physique'),
+(3, 20, 'Département Mecanique'),
+(4, 25, 'Département Genie Civil');

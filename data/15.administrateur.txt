@@ -1,0 +1,16 @@
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 60);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 61);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 62);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 63);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 64);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 65);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 66);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 67);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 68);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 69);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 70);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 71);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 72);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 73);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 74);
+INSERT INTO Administrateur (nbr_controle, id_personnel) VALUES (0, 75);

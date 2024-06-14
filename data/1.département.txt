@@ -1,0 +1,5 @@
+INSERT INTO département (id_département, nom_département) VALUES
+(1, 'Département Mathématiques et Informatique'),
+(2, 'Département Chimie et Physique'),
+(3, 'Département Mecanique'),
+(4, 'Département Genie Civil');

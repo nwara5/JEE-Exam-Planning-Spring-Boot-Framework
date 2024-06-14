@@ -1,0 +1,18 @@
+UPDATE public.filiere
+SET id_coordonnateur_filiere = 67
+WHERE id_filiere = 12;
+
+-------------------------------------
+INSERT INTO filiere (id_filiere, nom_filiere) VALUES
+(1, 'Cycle Préparatoire Intégré'),
+(2, 'Génie Civil'),
+(3, 'Génie de l''Eau et de l''Environnement (Accréditation - 2022)'),
+(4, 'Génie Energétique et Energie Renouvelable (Accréditation - 2021)'),
+(5, 'Génie Informatique (Accréditation 2021)'),
+(6, 'Génie Mécanique'),
+(7, 'Ingénierie des Données (Accréditation - 2022)'),
+(8, 'Transformation Digitale & Intelligence Artificielle'),
+(9, 'Génie de l''Eau et de l''Environnement'),
+(10, 'Génie Energétique et Energie Renouvelable (Ancienne accréditation)'),
+(11, 'Génie Environnement (Ancienne accréditation - 2010)'),
+(12, 'Génie Informatique (Ancienne accréditation - 2014)');

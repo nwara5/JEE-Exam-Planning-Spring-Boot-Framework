@@ -1,0 +1,47 @@
+UPDATE public.filiere
+SET id_enseignant_filiere = 5
+WHERE id_filiere = 1;
+
+UPDATE public.filiere
+SET id_enseignant_filiere = 28
+WHERE id_filiere = 2;
+
+UPDATE public.filiere
+SET id_enseignant_filiere = 46
+WHERE id_filiere = 3;
+
+UPDATE public.filiere
+SET id_enseignant_filiere = 30
+WHERE id_filiere = 4;
+
+UPDATE public.filiere
+SET id_enseignant_filiere = 6
+WHERE id_filiere = 5;
+
+UPDATE public.filiere
+SET id_enseignant_filiere = 23
+WHERE id_filiere = 6;
+
+UPDATE public.filiere
+SET id_enseignant_filiere = 50
+WHERE id_filiere = 7;
+
+UPDATE public.filiere
+SET id_enseignant_filiere = 51
+WHERE id_filiere = 8;
+
+UPDATE public.filiere
+SET id_enseignant_filiere = 12
+WHERE id_filiere = 9;
+
+UPDATE public.filiere
+SET id_enseignant_filiere = 11
+WHERE id_filiere = 10;
+
+UPDATE public.filiere
+SET id_enseignant_filiere = 33
+WHERE id_filiere = 11;
+
+UPDATE public.filiere
+SET id_enseignant_filiere = 57
+WHERE id_filiere = 12;
