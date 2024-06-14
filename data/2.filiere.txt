@@ -1,8 +1,3 @@
-UPDATE public.filiere
-SET id_coordonnateur_filiere = 67
-WHERE id_filiere = 12;
-
--------------------------------------
 INSERT INTO filiere (id_filiere, nom_filiere) VALUES
 (1, 'Cycle Préparatoire Intégré'),
 (2, 'Génie Civil'),
